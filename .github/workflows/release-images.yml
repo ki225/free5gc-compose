@@ -109,7 +109,7 @@ jobs:
               "free5gc/${image}:${RELEASE_TAG}-arm64"
           done
 
-      - name: Verify manifests and architecture aliases
+      - name: Verify multi-architecture manifests
         run: |
           image_digest() {
             docker buildx imagetools inspect "$1" |
@@ -137,16 +137,7 @@ jobs:
           for image in "${images[@]}"; do
             amd64_ref="free5gc/${image}:${RELEASE_TAG}-amd64"
             arm64_ref="free5gc/${image}:${RELEASE_TAG}-arm64"
-            amd64_legacy_ref="free5gc/${image}:${RELEASE_TAG}-x86_64"
-            arm64_legacy_ref="free5gc/${image}:${RELEASE_TAG}-aarch64"
             manifest_ref="free5gc/${image}:${RELEASE_TAG}"
-
-            amd64_tag_digest="$(image_digest "${amd64_ref}")"
-            arm64_tag_digest="$(image_digest "${arm64_ref}")"
-            test -n "${amd64_tag_digest}"
-            test -n "${arm64_tag_digest}"
-            test "${amd64_tag_digest}" = "$(image_digest "${amd64_legacy_ref}")"
-            test "${arm64_tag_digest}" = "$(image_digest "${arm64_legacy_ref}")"
 
             amd64_digest="$(platform_digest "${amd64_ref}" amd64)"
             arm64_digest="$(platform_digest "${arm64_ref}" arm64)"

@@ -15,6 +15,7 @@ base:
 
 all-base: base
 	docker build \
+		--build-arg BASE_IMAGE=$(DOCKER_IMAGE_OWNER)/base:$(DOCKER_IMAGE_TAG) \
 		--build-arg MAKE_JOBS=$(MAKE_JOBS) \
 		-t $(DOCKER_IMAGE_OWNER)/all-base:$(DOCKER_IMAGE_TAG) \
 		-f ./base/Dockerfile.all ./base

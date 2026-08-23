@@ -17,15 +17,13 @@ BUILD_SERVICES=(
     ueransim n3iwue
 )
 
+# Docker Hub tags use OCI architecture names; TARGET_ARCH follows Kitware's
+# CMake installer filename convention used by ueransim/Dockerfile.
 case "${ARCH}" in
-    amd64|x86_64)
-        ARCH=amd64
-        LEGACY_ARCH=x86_64
+    amd64)
         TARGET_ARCH=x86_64
         ;;
-    arm64|aarch64)
-        ARCH=arm64
-        LEGACY_ARCH=aarch64
+    arm64)
         TARGET_ARCH=aarch64
         ;;
     *)
@@ -36,7 +34,6 @@ esac
 
 TAG="${TAG#refs/tags/}"
 ARCH_TAG="${TAG}-${ARCH}"
-LEGACY_ARCH_TAG="${TAG}-${LEGACY_ARCH}"
 
 if [[ -n "${FREE5GC_COMMIT}" ]]; then
     git init -q base/free5gc
@@ -65,10 +62,7 @@ done
 
 for image in "${IMAGES[@]}"; do
     source_ref="free5gc/${image}:${ARCH_TAG}"
-    legacy_ref="free5gc/${image}:${LEGACY_ARCH_TAG}"
 
     docker image inspect "${source_ref}" >/dev/null
     docker push "${source_ref}"
-    docker tag "${source_ref}" "${legacy_ref}"
-    docker push "${legacy_ref}"
 done

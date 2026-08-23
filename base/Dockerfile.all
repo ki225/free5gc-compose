@@ -1,5 +1,6 @@
 # Build all free5GC network functions and WebConsole in one shared builder.
-FROM free5gc/base:latest AS builder
+ARG BASE_IMAGE=free5gc/base:latest
+FROM ${BASE_IMAGE} AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 ARG MAKE_JOBS=1
