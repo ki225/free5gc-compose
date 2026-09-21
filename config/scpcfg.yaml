@@ -1,0 +1,32 @@
+info:
+  version: 1.0.1
+  description: SCP initial local configuration
+
+configuration:
+  sbi:
+    scheme: http
+    registerIPv4: scp.free5gc.org
+    bindingIPv4: scp.free5gc.org
+    port: 8000
+  nrfUri: http://nrf.free5gc.org:8000
+  nrfCertPem: cert/nrf.pem
+  serviceList:
+    - serviceName: nausf-auth
+    - serviceName: nudm-ueau
+    - serviceName: nudm-sdm
+    - serviceName: nudr-dr
+  amfUri: http://amf.free5gc.org:8000
+  ausfUri: http://ausf.free5gc.org:8000
+  chfUri: http://chf.free5gc.org:8000
+  nefUri: http://nef.free5gc.org:8000
+  nssfUri: http://nssf.free5gc.org:8000
+  pcfUri: http://pcf.free5gc.org:8000
+  smfUri: http://smf.free5gc.org:8000
+  udmUri: http://udm.free5gc.org:8000
+  udrUri: http://udr.free5gc.org:8000
+  upfUri: http://upf.free5gc.org:8000
+
+logger:
+  enable: true
+  level: info
+  reportCaller: false
